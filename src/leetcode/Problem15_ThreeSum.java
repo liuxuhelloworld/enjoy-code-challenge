@@ -2,7 +2,7 @@ package leetcode;
 
 import java.util.*;
 
-public class Problem13_ThreeSum {
+public class Problem15_ThreeSum {
 	public List<List<Integer>> threeSum(int[] nums) {
 		int len = nums.length;
 		if (len == 0) {
@@ -42,7 +42,7 @@ public class Problem13_ThreeSum {
 	}
 
 	public static void main(String[] args) {
-		Problem13_ThreeSum obj = new Problem13_ThreeSum();
+		Problem15_ThreeSum obj = new Problem15_ThreeSum();
 		System.out.println(obj.threeSum(new int[] {0, 0, 0, 0, 0, 0}));
 		System.out.println(obj.threeSum(new int[] {-1, 0, 1, 2, -1, -4}));
 		System.out.println(obj.threeSum(new int[] {}));
