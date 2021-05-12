@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.list;
 
 /**
  * https://leetcode-cn.com/problems/swap-nodes-in-pairs/

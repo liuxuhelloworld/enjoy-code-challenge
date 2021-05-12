@@ -1,4 +1,6 @@
-package leetcode;
+package leetcode.list;
+
+import leetcode.list.ListNode;
 
 /**
  * https://leetcode-cn.com/problems/add-two-numbers/

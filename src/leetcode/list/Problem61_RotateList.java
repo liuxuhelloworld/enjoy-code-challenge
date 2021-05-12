@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.list;
 
 public class Problem61_RotateList {
 	public ListNode rotateRight(ListNode head, int k) {
