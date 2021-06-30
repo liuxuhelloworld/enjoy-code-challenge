@@ -1,4 +1,4 @@
-package leetcode.string;
+package leetcode.dynamicprogramming;
 
 /**
  * https://leetcode-cn.com/problems/interleaving-string/
