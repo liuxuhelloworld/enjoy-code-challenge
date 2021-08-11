@@ -1,7 +1,5 @@
 package leetcode.tree;
 
-import leetcode.list.ListNode;
-
 import java.util.Stack;
 
 /**
