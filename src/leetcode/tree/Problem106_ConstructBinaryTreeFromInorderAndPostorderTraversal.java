@@ -4,6 +4,25 @@ package leetcode.tree;
  * https://leetcode-cn.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/
  */
 public class Problem106_ConstructBinaryTreeFromInorderAndPostorderTraversal {
+	private static class TreeNode {
+		int val;
+		TreeNode left;
+		TreeNode right;
+
+		public TreeNode() {
+		}
+
+		public TreeNode(int val) {
+			this.val = val;
+		}
+
+		public TreeNode(int val, TreeNode left, TreeNode right) {
+			this.val = val;
+			this.left = left;
+			this.right = right;
+		}
+	}
+
 	public TreeNode buildTree(int[] inorder, int[] postorder) {
 		return recurBuildTree(inorder, 0, inorder.length - 1,
 			postorder, 0, postorder.length - 1);

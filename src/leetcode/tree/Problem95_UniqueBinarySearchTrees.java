@@ -1,6 +1,5 @@
 package leetcode.tree;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +7,25 @@ import java.util.List;
  * https://leetcode-cn.com/problems/unique-binary-search-trees-ii/
  */
 public class Problem95_UniqueBinarySearchTrees {
+	private static class TreeNode {
+		int val;
+		TreeNode left;
+		TreeNode right;
+
+		public TreeNode() {
+		}
+
+		public TreeNode(int val) {
+			this.val = val;
+		}
+
+		public TreeNode(int val, TreeNode left, TreeNode right) {
+			this.val = val;
+			this.left = left;
+			this.right = right;
+		}
+	}
+
 	public List<TreeNode> generateTrees(int n) {
 		assert n >= 1 && n <= 8;
 

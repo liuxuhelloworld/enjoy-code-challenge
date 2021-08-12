@@ -1,6 +1,15 @@
 package leetcode.list;
 
 public class Problem61_RotateList {
+	private static class ListNode {
+		int val;
+		ListNode next;
+
+		ListNode(int val) {
+			this.val = val;
+		}
+	}
+
 	public ListNode rotateRight(ListNode head, int k) {
 		if (head == null) {
 			return null;
@@ -41,9 +50,7 @@ public class Problem61_RotateList {
 		ListNode head = new ListNode(1);
 
 		head = obj.rotateRight(head, 1);
-		ListNode.print(head);
 
 		head = obj.rotateRight(head, 2);
-		ListNode.print(head);
 	}
 }

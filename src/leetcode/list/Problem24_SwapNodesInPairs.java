@@ -4,6 +4,15 @@ package leetcode.list;
  * https://leetcode-cn.com/problems/swap-nodes-in-pairs/
  */
 public class Problem24_SwapNodesInPairs {
+	private static class ListNode {
+		int val;
+		ListNode next;
+
+		ListNode(int val) {
+			this.val = val;
+		}
+	}
+
 	public ListNode swapPairs(ListNode head) {
 		if (head == null) {
 			return null;

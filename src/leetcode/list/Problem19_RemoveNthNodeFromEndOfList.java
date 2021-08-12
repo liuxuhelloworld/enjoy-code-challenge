@@ -1,11 +1,18 @@
 package leetcode.list;
 
-import leetcode.list.ListNode;
-
 /**
  * https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/
  */
 public class Problem19_RemoveNthNodeFromEndOfList {
+	private static class ListNode {
+		int val;
+		ListNode next;
+
+		ListNode(int val) {
+			this.val = val;
+		}
+	}
+
 	public ListNode removeNthFromEnd(ListNode head, int n) {
 		if (head == null || n <= 0) {
 			return head;

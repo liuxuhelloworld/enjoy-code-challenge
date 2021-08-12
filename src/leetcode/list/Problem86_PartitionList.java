@@ -4,6 +4,15 @@ package leetcode.list;
  * https://leetcode-cn.com/problems/partition-list/
  */
 public class Problem86_PartitionList {
+	private static class ListNode {
+		int val;
+		ListNode next;
+
+		ListNode(int val) {
+			this.val = val;
+		}
+	}
+
 	public ListNode partition(ListNode head, int x) {
 		if (head == null) {
 			return null;

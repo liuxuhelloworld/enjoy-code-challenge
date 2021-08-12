@@ -4,6 +4,15 @@ package leetcode.list;
  * https://leetcode-cn.com/problems/reverse-linked-list-ii/
  */
 public class Problem92_ReverseLinkedList {
+	private static class ListNode {
+		int val;
+		ListNode next;
+
+		ListNode(int val) {
+			this.val = val;
+		}
+	}
+
 	public ListNode reverseBetween(ListNode head, int left, int right) {
 		assert head != null;
 		assert left >= 1 && right >= 1 && left <= right;

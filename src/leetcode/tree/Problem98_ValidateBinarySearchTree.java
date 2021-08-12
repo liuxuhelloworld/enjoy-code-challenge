@@ -6,6 +6,25 @@ import java.util.Stack;
  * https://leetcode-cn.com/problems/validate-binary-search-tree/
  */
 public class Problem98_ValidateBinarySearchTree {
+	private static class TreeNode {
+		int val;
+		TreeNode left;
+		TreeNode right;
+
+		public TreeNode() {
+		}
+
+		public TreeNode(int val) {
+			this.val = val;
+		}
+
+		public TreeNode(int val, TreeNode left, TreeNode right) {
+			this.val = val;
+			this.left = left;
+			this.right = right;
+		}
+	}
+
 	public boolean isValidBST(TreeNode root) {
 		return isValidBSTUsingRecur(root, null, null);
 	}

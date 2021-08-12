@@ -4,6 +4,25 @@ package leetcode.tree;
  * https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
  */
 public class Problem105_ConstructBinaryTreeFromPreorderAndInorderTraversal {
+	private static class TreeNode {
+		int val;
+		TreeNode left;
+		TreeNode right;
+
+		public TreeNode() {
+		}
+
+		public TreeNode(int val) {
+			this.val = val;
+		}
+
+		public TreeNode(int val, TreeNode left, TreeNode right) {
+			this.val = val;
+			this.left = left;
+			this.right = right;
+		}
+	}
+
 	public TreeNode buildTree(int[] preorder, int[] inorder) {
 		return recurBuildTree(preorder, 0, preorder.length-1,
 			inorder, 0, inorder.length-1);
