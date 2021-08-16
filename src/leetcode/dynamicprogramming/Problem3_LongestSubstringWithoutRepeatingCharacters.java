@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.dynamicprogramming;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -138,9 +138,10 @@ public class Problem3_LongestSubstringWithoutRepeatingCharacters {
     public static void main(String[] args) {
         Problem3_LongestSubstringWithoutRepeatingCharacters obj =
             new Problem3_LongestSubstringWithoutRepeatingCharacters();
-        System.out.println(obj.lengthOfLongestSubstringWithoutRepeatingCharactersV5(" "));
-        System.out.println(obj.lengthOfLongestSubstringWithoutRepeatingCharactersV5("abcabcbb"));
-        System.out.println(obj.lengthOfLongestSubstringWithoutRepeatingCharactersV5("bbbbb"));
-        System.out.println(obj.lengthOfLongestSubstringWithoutRepeatingCharactersV5("pwwkew"));
+        System.out.println(obj.lengthOfLongestSubstringWithoutRepeatingCharacters("abba"));
+        System.out.println(obj.lengthOfLongestSubstringWithoutRepeatingCharacters(" "));
+        System.out.println(obj.lengthOfLongestSubstringWithoutRepeatingCharacters("abcabcbb"));
+        System.out.println(obj.lengthOfLongestSubstringWithoutRepeatingCharacters("bbbbb"));
+        System.out.println(obj.lengthOfLongestSubstringWithoutRepeatingCharacters("pwwkew"));
     }
 }
