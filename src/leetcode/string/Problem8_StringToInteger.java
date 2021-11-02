@@ -1,7 +1,4 @@
-package leetcode;
-
-import java.util.HashMap;
-import java.util.Map;
+package leetcode.string;
 
 /**
  * https://leetcode-cn.com/problems/string-to-integer-atoi/
@@ -191,90 +188,12 @@ public class Problem8_StringToInteger {
         }
     }
 
-    private enum StateEnum {
-        SPACE, SIGN, NUMBER, END
-    }
-
-    public int myAtoiV3(String s) {
-        AtoiAutomaton atoiAutomaton = new AtoiAutomaton(s);
-        return atoiAutomaton.atoi();
-    }
-
-    private class AtoiAutomaton {
-        private String s;
-
-        private StateEnum state = StateEnum.SPACE;
-        private boolean negative = false;
-        private long ret = 0;
-
-        private Map<StateEnum, StateEnum[]> transfer = new HashMap<StateEnum, StateEnum[]>() {{
-            put(StateEnum.SPACE,
-                new StateEnum[] {StateEnum.SPACE, StateEnum.SIGN, StateEnum.NUMBER, StateEnum.END});
-            put(StateEnum.SIGN,
-                new StateEnum[] {StateEnum.END, StateEnum.END, StateEnum.NUMBER, StateEnum.END});
-            put(StateEnum.NUMBER,
-                new StateEnum[] {StateEnum.END, StateEnum.END, StateEnum.NUMBER, StateEnum.END});
-            put(StateEnum.END,
-                new StateEnum[] {StateEnum.END, StateEnum.END, StateEnum.END, StateEnum.END});
-        }};
-
-        public AtoiAutomaton(String s) {
-            this.s = s;
-        }
-
-        public int atoi() {
-            for (char ch : s.toCharArray()) {
-                transfer(ch);
-
-                if (state.equals(StateEnum.SIGN)) {
-                    negative = ch == '-' ? true : false;
-                } else if (state.equals(StateEnum.NUMBER)) {
-                    ret = ret * 10 + (ch - '0');
-                    if (ret > Integer.MAX_VALUE) {
-                        break;
-                    }
-                } else if (state.equals(StateEnum.END)) {
-                    break;
-                }
-            }
-            ret = ret * (negative ? -1 : 1);
-
-            if (ret > Integer.MAX_VALUE) {
-                return Integer.MAX_VALUE;
-            } else if (ret < Integer.MIN_VALUE) {
-                return Integer.MIN_VALUE;
-            } else {
-                return (int)ret;
-            }
-        }
-
-        private void transfer(char ch) {
-            int index = computeIndex(ch);
-            state = transfer.get(state)[index];
-        }
-
-        private int computeIndex(char ch) {
-            int index;
-            if (Character.isSpaceChar(ch)) {
-                index = 0;
-            } else if (ch == '+' || ch == '-') {
-                index = 1;
-            } else if (Character.isDigit(ch)) {
-                index = 2;
-            } else {
-                index = 3;
-            }
-
-            return index;
-        }
-    }
-
     public static void main(String[] args) {
         Problem8_StringToInteger obj = new Problem8_StringToInteger();
-        System.out.println(obj.myAtoiV3("-13+8"));
-        System.out.println(obj.myAtoiV3("42"));
-        System.out.println(obj.myAtoiV3("   -42"));
-        System.out.println(obj.myAtoiV3("4193 with words"));
-        System.out.println(obj.myAtoiV3("words and 987"));
+        System.out.println(obj.myAtoiV2("-13+8"));
+        System.out.println(obj.myAtoiV2("42"));
+        System.out.println(obj.myAtoiV2("   -42"));
+        System.out.println(obj.myAtoiV2("4193 with words"));
+        System.out.println(obj.myAtoiV2("words and 987"));
     }
 }
