@@ -1,10 +1,4 @@
-package leetcode;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+package leetcode.string;
 
 /**
  * https://leetcode-cn.com/problems/integer-to-roman/
@@ -16,9 +10,6 @@ public class Problem12_IntegerToRoman {
 		{"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"},
 		{"", "M", "MM", "MMM"}
 	};
-
-	private static int[] val = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
-	private static String[] symbol = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
 
 	public String intToRoman(int num) {
 		StringBuilder builder = new StringBuilder();
@@ -38,6 +29,9 @@ public class Problem12_IntegerToRoman {
 
 		return builder.toString();
 	}
+
+	private static int[] val = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+	private static String[] symbol = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
 
 	public String intToRomanV2(int num) {
 		StringBuilder builder = new StringBuilder();
