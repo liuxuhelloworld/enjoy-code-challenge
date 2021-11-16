@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.recursion;
 
 import java.util.*;
 
@@ -19,33 +19,6 @@ public class Problem17_LetterCombinationsOfPhoneNumber {
 	}};
 
 	public List<String> letterCombinations(String digits) {
-		int len = digits.length();
-		if (len == 0) {
-			return Collections.emptyList();
-		}
-
-
-		List<String> ret = new ArrayList<>();
-		backtrack(ret, digits, 0, new StringBuffer());
-
-		return ret;
-	}
-
-	private void backtrack(List<String> combinations, String digits, int index, StringBuffer combination) {
-		if (index == digits.length()) {
-			combinations.add(combination.toString());
-		} else {
-			char digit = digits.charAt(index);
-			String chars = PHONE_NUMBER_TO_CHARACTERS.get(digit);
-			for (int i = 0; i < chars.length(); i++) {
-				combination.append(chars.charAt(i));
-				backtrack(combinations, digits, index+1, combination);
-				combination.deleteCharAt(index);
-			}
-		}
-	}
-
-	public List<String> letterCombinationsV2(String digits) {
 		return letterCombinationRecur(digits, 0, digits.length()-1);
 	}
 
@@ -73,9 +46,9 @@ public class Problem17_LetterCombinationsOfPhoneNumber {
 
 	public static void main(String[] args) {
 		Problem17_LetterCombinationsOfPhoneNumber obj = new Problem17_LetterCombinationsOfPhoneNumber();
-		System.out.println(obj.letterCombinationsV2(""));
-		System.out.println(obj.letterCombinationsV2("2"));
-		System.out.println(obj.letterCombinationsV2("23"));
-		System.out.println(obj.letterCombinationsV2("234"));
+		System.out.println(obj.letterCombinations(""));
+		System.out.println(obj.letterCombinations("2"));
+		System.out.println(obj.letterCombinations("23"));
+		System.out.println(obj.letterCombinations("234"));
 	}
 }
