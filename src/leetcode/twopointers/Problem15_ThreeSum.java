@@ -1,7 +1,10 @@
-package leetcode.sum;
+package leetcode.twopointers;
 
 import java.util.*;
 
+/**
+ * https://leetcode-cn.com/problems/3sum/
+ */
 public class Problem15_ThreeSum {
 	public List<List<Integer>> threeSum(int[] nums) {
 		int len = nums.length;
