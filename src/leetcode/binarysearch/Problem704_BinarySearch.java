@@ -1,4 +1,4 @@
-package leetcode.array;
+package leetcode.binarysearch;
 
 /**
  * https://leetcode-cn.com/problems/binary-search/
