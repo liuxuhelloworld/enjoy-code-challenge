@@ -1,6 +1,4 @@
-package leetcode;
-
-import java.awt.*;
+package leetcode.binarysearch;
 
 /**
  * https://leetcode-cn.com/problems/search-a-2d-matrix/
