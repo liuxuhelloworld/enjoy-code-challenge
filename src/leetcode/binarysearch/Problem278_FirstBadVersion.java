@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.binarysearch;
 
 /**
  * https://leetcode-cn.com/problems/first-bad-version/
