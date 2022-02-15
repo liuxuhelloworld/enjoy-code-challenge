@@ -42,30 +42,4 @@ public class Problem19_RemoveNthNodeFromEndOfList {
 
 		return size;
 	}
-
-	public ListNode removeNthFromEndV2(ListNode head, int n) {
-		if (head == null || n <= 0) {
-			return head;
-		}
-
-		ListNode dummy = new ListNode(-1);
-		dummy.next = head;
-
-		ListNode p = dummy, q = dummy;
-		for (int i = 0; i < n+1; i++) {
-			if (p != null) {
-				p = p.next;
-			} else {
-				return head;
-			}
-		}
-
-		while (p != null) {
-			p = p.next;
-			q = q.next;
-		}
-		q.next = q.next.next;
-
-		return dummy.next;
-	}
 }
