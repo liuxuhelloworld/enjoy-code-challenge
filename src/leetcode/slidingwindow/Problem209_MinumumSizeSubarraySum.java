@@ -1,5 +1,8 @@
 package leetcode.slidingwindow;
 
+/**
+ * https://leetcode-cn.com/problems/minimum-size-subarray-sum/
+ */
 public class Problem209_MinumumSizeSubarraySum {
 	public int minSubArrayLen(int target, int[] nums) {
 		int min = Integer.MAX_VALUE;
