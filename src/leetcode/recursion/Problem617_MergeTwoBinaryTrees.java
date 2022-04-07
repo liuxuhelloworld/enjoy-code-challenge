@@ -1,5 +1,8 @@
-package leetcode.dfs;
+package leetcode.recursion;
 
+/**
+ * https://leetcode-cn.com/problems/merge-two-binary-trees/
+ */
 public class Problem617_MergeTwoBinaryTrees {
 	private static class TreeNode {
 		int val;
