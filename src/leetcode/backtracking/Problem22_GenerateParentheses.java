@@ -1,4 +1,4 @@
-package leetcode.dfs;
+package leetcode.backtracking;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +10,12 @@ public class Problem22_GenerateParentheses {
 	public List<String> generateParenthesis(int n) {
 		List<String> res = new ArrayList<>();
 
-		dfs(res, n, n, new String());
+		backtrack(res, n, n, new String());
 
 		return res;
 	}
 
-	private void dfs(List<String> res, int openLeft, int closeLeft, String s) {
+	private void backtrack(List<String> res, int openLeft, int closeLeft, String s) {
 		if (openLeft == 0 && closeLeft == 0) {
 			res.add(s);
 			return;
@@ -26,11 +26,11 @@ public class Problem22_GenerateParentheses {
 		}
 
 		if (openLeft > 0) {
-			dfs(res, openLeft-1, closeLeft, s + "(");
+			backtrack(res, openLeft-1, closeLeft, s + "(");
 		}
 
 		if (closeLeft > 0) {
-			dfs(res, openLeft, closeLeft-1, s + ")");
+			backtrack(res, openLeft, closeLeft-1, s + ")");
 		}
 	}
 
