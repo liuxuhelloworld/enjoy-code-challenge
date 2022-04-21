@@ -1,4 +1,4 @@
-package leetcode.dfs;
+package leetcode.backtracking;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,13 +13,16 @@ public class Problem39_CombinationSum {
     List<Integer> combination = new ArrayList<>();
 
     candidates = Arrays.stream(candidates).sorted().toArray();
-    dfs(result, combination, candidates, 0,  target);
+    backtrack(result, combination, candidates, 0,  target);
 
     return result;
   }
 
-  private void dfs(List<List<Integer>> result, List<Integer> combination, int[] candidates,
-      int curIdx, int target) {
+  private void backtrack(List<List<Integer>> result,
+                         List<Integer> combination,
+                         int[] candidates,
+                         int curIdx,
+                         int target) {
 
     if (curIdx == candidates.length) {
       return;
@@ -36,11 +39,11 @@ public class Problem39_CombinationSum {
     }
 
     // curIdx excluded
-    dfs(result, combination, candidates, curIdx+1, target);
+    backtrack(result, combination, candidates, curIdx+1, target);
 
     // curIdx included
     combination.add(curVal);
-    dfs(result, combination, candidates, curIdx, target-curVal);
+    backtrack(result, combination, candidates, curIdx, target-curVal);
     combination.remove(combination.size()-1);
   }
 
