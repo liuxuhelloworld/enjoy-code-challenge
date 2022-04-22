@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.backtracking;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,13 +27,13 @@ public class Problem40_CombinationSum {
     List<List<Integer>> result = new ArrayList<>();
     List<Integer> combination = new ArrayList<>();
 
-    dfs(result, combination, candidatesAndFreq, 0, target);
+    backtrack(result, combination, candidatesAndFreq, 0, target);
 
     return result;
   }
 
-  private void dfs(List<List<Integer>> result, List<Integer> combination,
-      List<int[]> candidates, int curIdx, int target) {
+  private void backtrack(List<List<Integer>> result, List<Integer> combination,
+                         List<int[]> candidates, int curIdx, int target) {
 
     if (target == 0) {
       result.add(new ArrayList<>(combination));
@@ -58,7 +58,7 @@ public class Problem40_CombinationSum {
           combination.add(curVal);
         }
 
-        dfs(result, combination, candidates, curIdx+1, target-i*curVal);
+        backtrack(result, combination, candidates, curIdx+1, target-i*curVal);
 
       	for (int j = 0; j < i; j++) {
           combination.remove(combination.size()-1);
