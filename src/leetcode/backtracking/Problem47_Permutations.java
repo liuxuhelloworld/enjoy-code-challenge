@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.backtracking;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +29,8 @@ public class Problem47_Permutations {
 		}
 
 		for (int i = 0; i < nums.length; i++) {
-			if (tag[i] == true || (i > 0 && nums[i] == nums[i-1] && tag[i-1] == false)) {
+			if (tag[i] == true
+				|| (i > 0 && nums[i] == nums[i-1] && !tag[i-1])) {
 				continue;
 			}
 
