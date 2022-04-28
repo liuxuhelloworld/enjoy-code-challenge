@@ -1,23 +1,27 @@
-package leetcode;
+package leetcode.backtracking;
 
 /**
  * https://leetcode-cn.com/problems/word-search/
  */
 public class Problem79_WordSearch {
-	enum Direction {LEFT, UP, RIGHT, DOWN};
+	private int[] dx = new int[] {-1, 1, 0, 0};
+	private int[] dy = new int[] {0, 0, -1, 1};
 
 	public boolean exist(char[][] board, String word) {
 		int m = board.length;
 		int n = board[0].length;
 
+		boolean[][] tag = new boolean[m][n];
 
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
-				boolean[][] tag = new boolean[m][n];
-				tag[i][j] = true;
-				boolean exists = dfs(board, word, i, j, 0, tag);
-				if (exists) {
-					return true;
+				if (board[i][j] == word.charAt(0)) {
+					resetTag(tag);
+					tag[i][j] = true;
+					boolean exists = backtrack(board, i, j, word, 0, tag);
+					if (exists) {
+						return true;
+					}
 				}
 			}
 		}
@@ -25,7 +29,17 @@ public class Problem79_WordSearch {
 		return false;
 	}
 
-	private boolean dfs(char[][] board, String word, int curRow, int curCol, int curIdx, boolean[][] tag) {
+	private void resetTag(boolean[][] tag) {
+		for (int i = 0; i < tag.length; i++) {
+			for (int j = 0; j < tag[0].length; j++) {
+				if (tag[i][j]) {
+					tag[i][j] = false;
+				}
+			}
+		}
+	}
+
+	private boolean backtrack(char[][] board, int curRow, int curCol, String word, int curIdx, boolean[][] tag) {
 		if (board[curRow][curCol] != word.charAt(curIdx)) {
 			return false;
 		}
@@ -34,51 +48,20 @@ public class Problem79_WordSearch {
 			return true;
 		}
 
-		int nextRow, nextCol;
-
-		for (Direction direction : Direction.values()) {
-			nextRow = getNextRow(curRow, direction);
-			nextCol = getNextCol(curCol, direction);
+		for (int i = 0; i < dx.length; i++) {
+			int nextRow = curRow + dx[i];
+			int nextCol = curCol + dy[i];
 			if (isValidNextCell(nextRow, nextCol, word.charAt(curIdx+1), board, tag)) {
 				tag[nextRow][nextCol] = true;
-				boolean exists = dfs(board, word, nextRow, nextCol, curIdx+1, tag);
+				boolean exists = backtrack(board, nextRow, nextCol, word,curIdx+1, tag);
 				if (exists) {
 					return true;
-				} else {
-					tag[nextRow][nextCol] = false;
 				}
+				tag[nextRow][nextCol] = false;
 			}
 		}
 
 		return false;
-	}
-
-	private int getNextRow(int row, Direction direction) {
-		switch (direction) {
-			case LEFT:
-			case RIGHT:
-				return row;
-			case UP:
-				return row - 1;
-			case DOWN:
-				return row + 1;
-			default:
-				throw new RuntimeException("bad input");
-		}
-	}
-
-	private int getNextCol(int col, Direction direction) {
-		switch (direction) {
-			case LEFT:
-				return col - 1;
-			case RIGHT:
-				return col + 1;
-			case UP:
-			case DOWN:
-				return col;
-			default:
-				throw new RuntimeException("bad input");
-		}
 	}
 
 	private boolean isValidNextCell(int nextRow, int nextCol, char nextCh, char[][] board, boolean[][] tag) {
@@ -99,14 +82,13 @@ public class Problem79_WordSearch {
 	public static void main(String[] args) {
 		Problem79_WordSearch obj = new Problem79_WordSearch();
 		System.out.println(obj.exist(
-			new char[][] {{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}},
-			"ABCCED"));
+			new char[][] {{'A', 'B', 'C', 'E'}, {'S', 'F', 'E', 'S'}, {'A', 'D', 'E', 'E'}},
+			"ABCESEEEFS"));
 		System.out.println(obj.exist(
 			new char[][] {{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}},
 			"SEE"));
 		System.out.println(obj.exist(
 			new char[][] {{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}},
 			"ABCB"));
-
 	}
 }
