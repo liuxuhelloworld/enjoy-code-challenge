@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.dynamicprogramming;
 
 /**
  * https://leetcode-cn.com/problems/jump-game-ii/
