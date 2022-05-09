@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.greedy;
 
 /**
  * https://leetcode-cn.com/problems/jump-game/
