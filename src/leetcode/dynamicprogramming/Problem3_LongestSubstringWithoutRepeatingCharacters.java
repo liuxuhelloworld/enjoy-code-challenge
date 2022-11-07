@@ -1,10 +1,5 @@
 package leetcode.dynamicprogramming;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 /**
  * https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/
  */
