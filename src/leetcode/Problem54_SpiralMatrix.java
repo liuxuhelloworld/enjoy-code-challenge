@@ -1,7 +1,5 @@
 package leetcode;
 
-import javafx.geometry.Pos;
-
 import java.util.ArrayList;
 import java.util.List;
 
