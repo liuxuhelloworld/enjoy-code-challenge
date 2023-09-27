@@ -38,7 +38,7 @@ public class Problem71_SimplifyPath {
 		return ret;
 	}
 
-	public String simplifyPathV2(String path) {
+	public String simplifyPath2(String path) {
 		assert path != null;
 		assert path.length() > 0;
 
@@ -74,9 +74,9 @@ public class Problem71_SimplifyPath {
 
 	public static void main(String[] args) {
 		Problem71_SimplifyPath obj = new Problem71_SimplifyPath();
-		System.out.println(obj.simplifyPathV2("/home/"));
-		System.out.println(obj.simplifyPathV2("/../"));
-		System.out.println(obj.simplifyPathV2("/home//foo"));
-		System.out.println(obj.simplifyPathV2("/a/./b/../../c/"));
+		System.out.println(obj.simplifyPath2("/home/"));
+		System.out.println(obj.simplifyPath2("/../"));
+		System.out.println(obj.simplifyPath2("/home//foo"));
+		System.out.println(obj.simplifyPath2("/a/./b/../../c/"));
 	}
 }

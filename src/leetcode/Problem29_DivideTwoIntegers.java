@@ -35,7 +35,7 @@ public class Problem29_DivideTwoIntegers {
 		return (int)res;
 	}
 
-	public int divideV2(int dividend, int divisor) {
+	public int divide2(int dividend, int divisor) {
 		if (divisor == 0) {
 			return Integer.MAX_VALUE;
 		}
@@ -75,11 +75,11 @@ public class Problem29_DivideTwoIntegers {
 
 	public static void main(String[] args) {
 		Problem29_DivideTwoIntegers obj = new Problem29_DivideTwoIntegers();
-		System.out.println(obj.divideV2(-2147483648, -1));
-		System.out.println(obj.divideV2(2147483647, 1));
-		System.out.println(obj.divideV2(10, 3));
-		System.out.println(obj.divideV2(7, -3));
-		System.out.println(obj.divideV2(0, 1));
-		System.out.println(obj.divideV2(1, 1));
+		System.out.println(obj.divide2(-2147483648, -1));
+		System.out.println(obj.divide2(2147483647, 1));
+		System.out.println(obj.divide2(10, 3));
+		System.out.println(obj.divide2(7, -3));
+		System.out.println(obj.divide2(0, 1));
+		System.out.println(obj.divide2(1, 1));
 	}
 }
