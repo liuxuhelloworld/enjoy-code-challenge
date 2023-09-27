@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.dynamicprogramming;
 
 public class Problem1483_KthAncestorOfTreeNode {
 	static class TreeAncestor {
