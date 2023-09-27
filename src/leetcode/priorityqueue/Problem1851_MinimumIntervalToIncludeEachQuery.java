@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.priorityqueue;
 
 import java.util.*;
 
@@ -7,39 +7,45 @@ import java.util.*;
  */
 public class Problem1851_MinimumIntervalToIncludeEachQuery {
 	public int[] minInterval(int[][] intervals, int[] queries) {
-		Set<Integer> nums = new HashSet<>();
-		Map<Integer, Integer> sizeMap = new HashMap<>();
+		int[] result = new int[queries.length];
+		Arrays.fill(result, -1);
 
-		for (int i = 0; i < intervals.length; i++) {
-			int[] interval = intervals[i];
-			int left = interval[0];
-			int right = interval[1];
+		Integer[] queriesIdx = new Integer[queries.length];
+		for (int i = 0; i < queriesIdx.length; i++) {
+			queriesIdx[i] = i;
+		}
+		Arrays.sort(queriesIdx, Comparator.comparingInt(i -> queries[i]));
 
-			int size = right - left + 1;
+		Arrays.sort(intervals, Comparator.comparingInt(interval -> interval[0]));
 
-			for (int j = left; j <= right; j++) {
-				if (!nums.contains(j)) {
-					nums.add(j);
-					sizeMap.put(j, size);
+		PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(
+			(interval1, interval2) -> interval1[1] - interval1[0] - interval2[1] + interval2[0]);
+
+		int i = 0;
+		int intervalIdx = 0;
+		while (i < queriesIdx.length) {
+			int queryIdx = queriesIdx[i];
+			int query = queries[queryIdx];
+
+			while (intervalIdx < intervals.length && intervals[intervalIdx][0] <= query) {
+				priorityQueue.offer(intervals[intervalIdx]);
+				intervalIdx++;
+			}
+
+			while (!priorityQueue.isEmpty()) {
+				int[] curInterval = priorityQueue.peek();
+				if (curInterval[1] < query) {
+					priorityQueue.poll();
 				} else {
-					if (sizeMap.get(j) > size) {
-						sizeMap.put(j, size);
-					}
+					result[queryIdx] = curInterval[1] - curInterval[0] + 1;
+					break;
 				}
 			}
+
+			i++;
 		}
 
-		int[] ret = new int[queries.length];
-		for (int i = 0; i < queries.length; i++) {
-			int query = queries[i];
-			if (!nums.contains(query)) {
-				ret[i] = -1;
-			} else {
-				ret[i] = sizeMap.get(query);
-			}
-		}
-
-		return ret;
+		return result;
 	}
 
 	public static void main(String[] args) {
@@ -47,11 +53,11 @@ public class Problem1851_MinimumIntervalToIncludeEachQuery {
 			new Problem1851_MinimumIntervalToIncludeEachQuery();
 
 		int[][] intervals = new int[][] {
-			{1, 4},
-			{2, 4},
-			{3, 6},
-			{4, 4}};
-		int[] queries = new int[] {2,3,4,5};
+			{2, 3},
+			{2, 5},
+			{1, 8},
+			{20, 25}};
+		int[] queries = new int[] {2,19,5,22};
 
 		int[] ret = obj.minInterval(intervals, queries);
 		System.out.println(Arrays.toString(ret));
