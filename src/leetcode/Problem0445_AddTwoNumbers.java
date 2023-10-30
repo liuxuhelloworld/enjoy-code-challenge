@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.util.Stack;
+
 /**
  * https://leetcode.cn/problems/add-two-numbers-ii/
  */
@@ -16,59 +18,47 @@ public class Problem0445_AddTwoNumbers {
 	}
 
 	public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-		int size1 = size(l1);
-		int size2 = size(l2);
+		Stack<Integer> stack1 = new Stack<>();
+		while (l1 != null) {
+			stack1.push(l1.val);
+			l1 = l1.next;
+		}
 
-		ListNode ret = recur(l1, size1, l2, size2);
+		Stack<Integer> stack2 = new Stack<>();
+		while (l2 != null) {
+			stack2.push(l2.val);
+			l2 = l2.next;
+		}
+
+		int carry = 0;
+		ListNode dummy = new ListNode(-1);
+
+		while (!stack1.isEmpty()
+			|| !stack2.isEmpty()) {
+
+			int val1 = 0, val2 = 0;
+			if (!stack1.isEmpty()) {
+				val1 = stack1.pop();
+			}
+			if (!stack2.isEmpty()) {
+				val2 = stack2.pop();
+			}
+
+			int remain = (val1 + val2 + carry) % 10;
+			carry = (val1 + val2 + carry) / 10;
+
+			ListNode node = new ListNode(remain);
+			node.next = dummy.next;
+			dummy.next = node;
+		}
+
 		if (carry != 0) {
-			ListNode head = new ListNode(1);
-			head.next = ret;
-			return head;
+			ListNode node = new ListNode(1);
+			node.next = dummy.next;
+			dummy.next = node;
 		}
 
-		return ret;
-	}
-
-	private int size(ListNode list) {
-		int size = 0;
-		while (list != null) {
-			size++;
-			list = list.next;
-		}
-
-		return size;
-	}
-
-	private ListNode recur(ListNode l1, int size1, ListNode l2, int size2) {
-		if (size1 == 0) {
-			return l2;
-		}
-		if (size2 == 0) {
-			return l1;
-		}
-
-		ListNode next;
-
-		int val1 = 0, val2 = 0;
-		if (size1 == size2) {
-			val1 = l1.val;
-			val2 = l2.val;
-			next = recur(l1.next, size1 - 1, l2.next, size2 - 1);
-		} else if (size1 < size2) {
-			val2 = l2.val;
-			next = recur(l1, size1, l2.next, size2 - 1);
-		} else {
-			val1 = l1.val;
-			next = recur(l1.next, size1 - 1, l2, size2);
-		}
-
-		int remain = (val1 + val2 + carry) % 10;
-		carry = (val1 + val2 + carry) / 10;
-
-		ListNode current = new ListNode(remain);
-		current.next = next;
-
-		return current;
+		return dummy.next;
 	}
 
 	public static void main(String[] args) {
