@@ -5,58 +5,49 @@ package leetcode;
  */
 public class Problem0004_MedianOfTwoSortedArrays {
 	public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-		int length1 = nums1.length;
-		int length2 = nums2.length;
+		int len1 = nums1.length;
+		int len2 = nums2.length;
 
-		if (length1 == 1 && length2 == 0) {
-			return nums1[0];
-		}
-
-		if (length1 == 0 && length2 == 1) {
-			return nums2[0];
-		}
-
-		int targetCnt1 = (int) Math.ceil((double)(length1+length2) / 2);
-		int targetCnt2 = targetCnt1 + 1;
-
-		int target1 = 0, target2 = 0;
-		int cnt = 0;
-
-		int i = 0, j = 0;
-		while (i < length1 || j < length2) {
-			cnt++;
-
-			int min;
-			if (i == length1) {
-				min = nums2[j++];
-			} else if (j == length2) {
-				min = nums1[i++];
-			} else {
-				int val1 = nums1[i];
-				int val2 = nums2[j];
-
-				if (val1 <= val2) {
-					min = val1;
-					i++;
-				} else {
-					min = val2;
-					j++;
-				}
-			}
-
-			if (cnt == targetCnt1) {
-				target1 = min;
-			}
-			if (cnt == targetCnt2) {
-				target2 = min;
-				break;
-			}
-		}
-
-		if ((length1 + length2) % 2 == 1) {
-			return target1;
+		if ((len1 + len2) % 2 == 0) {
+			int cnt1 = (len1 + len2) / 2;
+			int cnt2 = (len1 + len2) / 2 + 1;
+			int val1 = findKthNumberOfTwoSortedArrays(nums1, nums2, cnt1);
+			int val2 = findKthNumberOfTwoSortedArrays(nums1, nums2, cnt2);
+			return (double)(val1 + val2) / 2;
 		} else {
-			return (double) (target1 + target2) / 2;
+			int cnt = (len1 + len2) / 2 + 1;
+			int val = findKthNumberOfTwoSortedArrays(nums1, nums2, cnt);
+			return (double) val;
+		}
+	}
+
+	private int findKthNumberOfTwoSortedArrays(int[] nums1, int[] nums2, int k) {
+		int idx1 = 0, idx2 = 0;
+		while (true) {
+			if (idx1 >= nums1.length) {
+				return nums2[idx2 + k - 1];
+			}
+
+			if (idx2 >= nums2.length) {
+				return nums1[idx1 + k - 1];
+			}
+
+			if (k == 1) {
+				return Math.min(nums1[idx1], nums2[idx2]);
+			}
+
+			int n = k/2;
+			int newIdx1 = Math.min(idx1 + n - 1, nums1.length - 1);
+			int newIdx2 = Math.min(idx2 + n - 1, nums2.length - 1);
+			int val1 = nums1[newIdx1];
+			int val2 = nums2[newIdx2];
+			if (val1 <= val2) {
+				k = k - (newIdx1 - idx1 + 1);
+				idx1 = newIdx1 + 1;
+			} else {
+				k = k - (newIdx2 - idx2 + 1);
+				idx2 = newIdx2 + 1;
+			}
 		}
 	}
 
