@@ -44,12 +44,44 @@ public class Problem0045_JumpGame {
 		return min;
 	}
 
+	public int jump2(int[] nums) {
+		int len = nums.length;
+		if (len == 1) {
+			return 0;
+		}
+
+		int jump = 0;
+		int curIdx = 0;
+		int jumpIdx = -1;
+		while (true) {
+			int curVal = nums[curIdx];
+			int canReachIdx = Math.min(curIdx + curVal, len-1);
+			if (canReachIdx == len-1) {
+				jump++;
+				break;
+			}
+
+			int maxSum = Integer.MIN_VALUE;
+			for (int i = curIdx+1; i <= canReachIdx ; i++) {
+				int sum = i + nums[i];
+				if (sum > maxSum) {
+					maxSum = sum;
+					jumpIdx = i;
+				}
+			}
+
+			jump++;
+			curIdx = jumpIdx;
+		}
+
+		return jump;
+	}
 
 	public static void main(String[] args) {
 		Problem0045_JumpGame obj = new Problem0045_JumpGame();
-		System.out.println(obj.jump(new int[] {0}));
-		System.out.println(obj.jump(new int[] {2, 1}));
-		System.out.println(obj.jump(new int[] {2, 3, 1, 1, 4}));
-		System.out.println(obj.jump(new int[] {2, 3, 0, 1, 4}));
+		System.out.println(obj.jump2(new int[] {0}));
+		System.out.println(obj.jump2(new int[] {2, 1}));
+		System.out.println(obj.jump2(new int[] {2, 3, 1, 1, 4}));
+		System.out.println(obj.jump2(new int[] {2, 3, 0, 1, 4}));
 	}
 }
