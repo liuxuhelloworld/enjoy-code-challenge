@@ -4,36 +4,10 @@ package leetcode;
  * https://leetcode-cn.com/problems/integer-to-roman/
  */
 public class Problem0012_IntegerToRoman {
-	private static String[][] romanSymbol = {
-		{"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"},
-		{"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"},
-		{"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"},
-		{"", "M", "MM", "MMM"}
-	};
-
-	public String intToRoman(int num) {
-		StringBuilder builder = new StringBuilder();
-
-		int op = 1000;
-		while (num != 0) {
-			int quotient = num / op;
-			int remainder = num % op;
-
-			if (quotient != 0) {
-				builder.append(romanSymbol[(int)Math.log10(op)][quotient]);
-			}
-
-			op = op / 10;
-			num = remainder;
-		}
-
-		return builder.toString();
-	}
-
 	private static int[] val = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
 	private static String[] symbol = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
 
-	public String intToRoman2(int num) {
+	public String intToRoman(int num) {
 		StringBuilder builder = new StringBuilder();
 
 		int i = 0;
@@ -53,10 +27,10 @@ public class Problem0012_IntegerToRoman {
 
 	public static void main(String[] args) {
 		Problem0012_IntegerToRoman obj = new Problem0012_IntegerToRoman();
-		System.out.println(obj.intToRoman2(3));
-		System.out.println(obj.intToRoman2(4));
-		System.out.println(obj.intToRoman2(9));
-		System.out.println(obj.intToRoman2(58));
-		System.out.println(obj.intToRoman2(1994));
+		System.out.println(obj.intToRoman(3));
+		System.out.println(obj.intToRoman(4));
+		System.out.println(obj.intToRoman(9));
+		System.out.println(obj.intToRoman(58));
+		System.out.println(obj.intToRoman(1994));
 	}
 }
