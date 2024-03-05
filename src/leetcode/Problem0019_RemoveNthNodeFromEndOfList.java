@@ -14,32 +14,27 @@ public class Problem0019_RemoveNthNodeFromEndOfList {
 	}
 
 	public ListNode removeNthFromEnd(ListNode head, int n) {
-		if (head == null || n <= 0) {
-			return head;
+		ListNode dummy = new ListNode(0);
+		dummy.next = head;
+
+		ListNode p = dummy, q = dummy;
+		for (int i = 0; i <= n; i++) {
+			p = p.next;
 		}
 
-		int size = size(head);
-		if (size == n) {
-			head = head.next;
-		} else if (size > n) {
-			ListNode p = head;
-			int i = 1;
-			while (i++ < size-n) {
-				p = p.next;
-			}
-			p.next = p.next.next;
+		while (p != null) {
+			p = p.next;
+			q = q.next;
 		}
+		q.next = q.next.next;
 
-		return head;
+		return dummy.next;
 	}
 
-	private int size(ListNode node) {
-		int size = 0;
-		while (node != null) {
-			size++;
-			node = node.next;
-		}
+	public static void main(String[] args) {
+		Problem0019_RemoveNthNodeFromEndOfList obj = new Problem0019_RemoveNthNodeFromEndOfList();
+		ListNode head = new ListNode(1);
 
-		return size;
+		head = obj.removeNthFromEnd(head, 1);
 	}
 }
