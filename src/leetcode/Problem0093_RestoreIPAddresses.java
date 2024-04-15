@@ -10,91 +10,61 @@ import java.util.stream.Collectors;
  */
 public class Problem0093_RestoreIPAddresses {
 	public List<String> restoreIpAddresses(String s) {
-		assert s != null;
+		List<String> ipAddresses = new ArrayList<>();
+		List<String> ipParts = new ArrayList<>();
 
-		int len = s.length();
-		if (len == 0) {
-			return Collections.emptyList();
-		}
+		backtrack(ipAddresses, ipParts, s, 0);
 
-		List<String> candidates = new ArrayList<>();
+		return ipAddresses;
+	}
 
-		String first = s.substring(0, 1);
-		candidates.add(first);
+	private void backtrack(List<String> ipAddresses,
+	                       List<String> ipParts,
+	                       String s,
+	                       int idx) {
 
-		for (int i = 1; i < len; i++) {
-			String cur = s.substring(i, i+1);
-
-			List<String> newCandidates = new ArrayList<>();
-
-			for (String candidate : candidates) {
-				if (canBeAppended(candidate)) {
-					newCandidates.add(candidate + "." + cur);
-				}
-
-				if (canBeAppendedAsWhole(candidate, cur)) {
-					newCandidates.add(candidate + cur);
-				}
+		if (idx == s.length()) {
+			if (ipParts.size() == 4) {
+				ipAddresses.add(String.join(".", ipParts));
 			}
-
-			candidates = newCandidates;
+			return;
 		}
 
-		return candidates.stream()
-			.filter(this::isValidIPAddress)
-			.collect(Collectors.toList());
-	}
-
-	private boolean canBeAppended(String candidate) {
-		int dotNum = countDotNum(candidate);
-		if (dotNum <= 2) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	private boolean canBeAppendedAsWhole(String candidate, String appended) {
-		int index = candidate.lastIndexOf('.');
-
-		String lastPart;
-		if (index == -1) {
-			lastPart = candidate;
-		} else {
-			lastPart = candidate.substring(candidate.lastIndexOf('.') + 1);
+		if (ipParts.size() >= 4) {
+			return;
 		}
 
-		if (lastPart.equals("0")) {
-			return false;
+		if (ipParts.size() == 3 && s.length() - idx > 3) {
+			return;
 		}
 
-		int val = Integer.parseInt(lastPart + appended);
-		if (val > 0 && val <= 255) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	private boolean isValidIPAddress(String candidate) {
-		int dotNum = countDotNum(candidate);
-
-		if (dotNum == 3) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	private int countDotNum(String candidate) {
-		int dotNum = 0;
-		for (int i = 0; i < candidate.length(); i++) {
-			if (candidate.charAt(i) == '.') {
-				dotNum++;
+		for (int i = 0; i < 3 && idx+i+1 <= s.length(); i++) {
+			String part = s.substring(idx, idx + i + 1);
+			if (isValidIpPart(part)) {
+				ipParts.add(part);
+				backtrack(ipAddresses, ipParts, s, idx + i + 1);
+				ipParts.remove(ipParts.size() - 1);
 			}
 		}
+	}
 
-		return dotNum;
+	private boolean isValidIpPart(String part) {
+		int len = part.length();
+
+		if (len == 1) {
+			return true;
+		}
+
+		char first = part.charAt(0);
+		if (first == '0') {
+			return false;
+		}
+
+		if (len == 3) {
+			return part.compareTo("255") <= 0;
+		}
+
+		return true;
 	}
 
 	public static void main(String[] args) {
