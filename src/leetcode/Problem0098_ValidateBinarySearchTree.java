@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -26,28 +28,36 @@ public class Problem0098_ValidateBinarySearchTree {
 	}
 
 	public boolean isValidBST(TreeNode root) {
-		return isValidBSTUsingRecur(root, null, null);
+		Stack<TreeNode> stack = new Stack<>();
+		return inOrder(root, stack);
 	}
 
-	private boolean isValidBSTUsingRecur(TreeNode cur, Integer lower, Integer upper) {
-		if (cur == null) {
+	private boolean inOrder(TreeNode node, Stack<TreeNode> stack) {
+		if (node == null) {
 			return true;
 		}
 
-		if (lower != null && cur.val <= lower) {
-			return false;
+		if (node.left != null) {
+			boolean ret = inOrder(node.left, stack);
+			if (!ret) {
+				return false;
+			}
 		}
 
-		if (upper != null && cur.val >= upper) {
-			return false;
+		if (!stack.isEmpty()) {
+			TreeNode last = stack.peek();
+			if (node.val <= last.val) {
+				return false;
+			}
 		}
 
-		if (!isValidBSTUsingRecur(cur.left, lower, cur.val)) {
-			return false;
-		}
+		stack.add(node);
 
-		if (!isValidBSTUsingRecur(cur.right, cur.val, upper)) {
-			return false;
+		if (node.right != null) {
+			boolean ret = inOrder(node.right, stack);
+			if (!ret) {
+				return false;
+			}
 		}
 
 		return true;
@@ -92,12 +102,11 @@ public class Problem0098_ValidateBinarySearchTree {
 		TreeNode node3 = new TreeNode(3);
 		TreeNode node4 = new TreeNode(6);
 
-
 		root.left = node1;
 		root.right = node2;
 		node2.left = node3;
 		node2.right = node4;
 
-		System.out.println(obj.isValidBST2(root));
+		System.out.println(obj.isValidBST(root));
 	}
 }
