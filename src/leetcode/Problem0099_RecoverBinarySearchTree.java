@@ -33,16 +33,25 @@ public class Problem0099_RecoverBinarySearchTree {
 		inOrderTraverse(root, inOrderList);
 
 		TreeNode swappedLarge = null, swappedSmall = null;
-		TreeNode prev = null;
-		for (TreeNode cur : inOrderList) {
-			if (prev != null && prev.val > cur.val) {
-				swappedSmall = cur;
-				if (swappedLarge == null) {
-					swappedLarge = prev;
-				}
+		for (int i = 0; i < inOrderList.size() - 1; i++) {
+			TreeNode cur = inOrderList.get(i);
+			TreeNode next = inOrderList.get(i+1);
+			if (cur.val > next.val) {
+				swappedLarge = cur;
+				break;
 			}
-			prev = cur;
 		}
+		for (int i = inOrderList.size() - 1; i > 0; i--) {
+			TreeNode cur = inOrderList.get(i);
+			TreeNode prev = inOrderList.get(i-1);
+			if (cur.val < prev.val) {
+				swappedSmall = cur;
+				break;
+			}
+		}
+
+		assert swappedLarge != null;
+		assert swappedSmall != null;
 
 		int tmp = swappedLarge.val;
 		swappedLarge.val = swappedSmall.val;
@@ -59,39 +68,6 @@ public class Problem0099_RecoverBinarySearchTree {
 		inOrderTraverse(node.right, inOrderList);
 	}
 
-	public void recoverTree2(TreeNode root) {
-		assert root != null;
-
-		Stack<TreeNode> stack = new Stack<>();
-		TreeNode node = root;
-		TreeNode prev = null;
-		TreeNode swappedLarge = null, swappedSmall = null;
-		while (node != null
-			|| !stack.isEmpty()) {
-			while (node != null) {
-				stack.push(node);
-				node = node.left;
-			}
-
-			TreeNode cur = stack.pop();
-			if (prev != null && prev.val > cur.val) {
-				swappedSmall = cur;
-				if (swappedLarge == null) {
-					swappedLarge = prev;
-				}
-			}
-			prev = cur;
-
-			if (cur.right != null) {
-				node = cur.right;
-			}
-		}
-
-		int tmp = swappedLarge.val;
-		swappedLarge.val = swappedSmall.val;
-		swappedSmall.val = tmp;
-	}
-
 	public static void main(String[] args) {
 		Problem0099_RecoverBinarySearchTree obj = new Problem0099_RecoverBinarySearchTree();
 
@@ -100,7 +76,7 @@ public class Problem0099_RecoverBinarySearchTree {
 		root.right = new TreeNode(4);
 		root.right.left = new TreeNode(2);
 
-		obj.recoverTree2(root);
+		obj.recoverTree(root);
 
 		System.out.println(root);
 	}
