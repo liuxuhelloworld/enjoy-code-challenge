@@ -35,10 +35,11 @@ public class Problem0116_PopulatingNextRightPointersInEachNode {
 		Queue<Node> queue = new LinkedList<>();
 		queue.add(root);
 
+		Node dummy = new Node(-1);
+
 		while (!queue.isEmpty()) {
 			int size = queue.size();
 
-			Node dummy = new Node(0);
 			Node last = dummy;
 			for (int i = 0; i < size; i++) {
 				Node cur = queue.poll();
