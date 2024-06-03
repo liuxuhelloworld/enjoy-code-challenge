@@ -29,49 +29,36 @@ public class Problem0113_PathSum {
 
 	public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
 		List<List<Integer>> result = new ArrayList<>();
-		List<Integer> cur = new ArrayList<>();
+		List<TreeNode> path = new ArrayList<>();
 
-		dfs(result, cur, root, targetSum);
+		dfs(result, path, root, targetSum);
 
 		return result;
 	}
 
-	private void dfs(List<List<Integer>> result, List<Integer> cur, TreeNode node, int target) {
+	private void dfs(List<List<Integer>> result, List<TreeNode> path, TreeNode node, int target) {
 		if (node == null) {
 			return;
 		}
 
-		if (isLeafNode(node)) {
+		path.add(node);
+
+		if (node.left == null
+			&& node.right == null) {
 			if (node.val == target) {
-				cur.add(node.val);
-				result.add(clone(cur));
-				cur.remove(cur.size() - 1);
+				result.add(path.stream().map(e -> e.val).toList());
 			}
-			return;
 		}
 
 		if (node.left != null) {
-			cur.add(node.val);
-			dfs(result, cur, node.left, target - node.val);
-			cur.remove(cur.size() - 1);
+			dfs(result, path, node.left, target - node.val);
 		}
 
 		if (node.right != null) {
-			cur.add(node.val);
-			dfs(result, cur, node.right, target - node.val);
-			cur.remove(cur.size() - 1);
+			dfs(result, path, node.right, target - node.val);
 		}
-	}
 
-	private boolean isLeafNode(TreeNode node) {
-		return node != null
-			&& node.left == null
-			&& node.right == null;
-	}
-
-	private List<Integer> clone(List<Integer> list) {
-		return list.stream()
-			.collect(Collectors.toList());
+		path.remove(path.size() - 1);
 	}
 
 	public static void main(String[] args) {
