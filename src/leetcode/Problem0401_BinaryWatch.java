@@ -10,64 +10,40 @@ import java.util.Set;
  */
 public class Problem0401_BinaryWatch {
 	public List<String> readBinaryWatch(int turnedOn) {
-		int[] hourVal = new int[] {8, 4, 2, 1};
-		int[] minuteVal = new int[] {32, 16, 8, 4, 2, 1};
+		List<String> list = new ArrayList<>();
 
-		List<String> result = new ArrayList<>();
+		int[] binaryOneCnt = new int[64];
+		for (int i = 0; i < 64; i++) {
+			binaryOneCnt[i] = cntBinaryOne(i);
+		}
 
-		for (int hourTurned = 0; hourTurned <= turnedOn; hourTurned++) {
-			int minuteTurned = turnedOn - hourTurned;
+		StringBuilder builder = new StringBuilder();
 
-			Set<Integer> hourResult = new HashSet<>();
-			boolean[] hourSelected = new boolean[hourVal.length];
-			backtrack(hourResult, hourSelected, hourVal, hourTurned, 11);
-
-			Set<Integer> minuteResult = new HashSet<>();
-			boolean[] minuteSelected = new boolean[minuteVal.length];
-			backtrack(minuteResult, minuteSelected, minuteVal, minuteTurned, 59);
-
-			for (Integer hour : hourResult) {
-				for (Integer minute : minuteResult) {
-					String time = hour + ":" + (minute >= 10 ? "" + minute : "0" + minute);
-					result.add(time);
+		for (int hour = 0; hour <= 11; hour++) {
+			int hourBinaryOneCnt = binaryOneCnt[hour];
+			for (int minute = 0; minute <= 59; minute++) {
+				int minuteBinaryOneCnt = binaryOneCnt[minute];
+				if (hourBinaryOneCnt + minuteBinaryOneCnt == turnedOn) {
+					builder.setLength(0);
+					builder.append(hour);
+					builder.append(":");
+					builder.append(minute < 10 ? "0" + minute : minute);
+					list.add(builder.toString());
 				}
 			}
 		}
 
-		return result;
+		return list;
 	}
 
-	private void backtrack(Set<Integer> result, boolean[] selected, int[] nums, int remain, int max) {
-		if (remain > nums.length) {
-			return;
+	private int cntBinaryOne(int val) {
+		int cnt = 0;
+		while (val != 0) {
+			cnt++;
+			val &= (val - 1);
 		}
 
-		if (remain == 0) {
-			int sum = sum(nums, selected);
-			if (sum <= max) {
-				result.add(sum);
-			}
-			return;
-		}
-
-		for (int i = 0; i < selected.length; i++) {
-			if (!selected[i]) {
-				selected[i] = true;
-				backtrack(result, selected, nums, remain - 1, max);
-				selected[i] = false;
-			}
-		}
-	}
-
-	private int sum(int[] nums, boolean[] selected) {
-		int sum = 0;
-		for (int i = 0; i < nums.length; i++) {
-			if (selected[i]) {
-				sum += nums[i];
-			}
-		}
-
-		return sum;
+		return cnt;
 	}
 
 	public static void main(String[] args) {
