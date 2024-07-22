@@ -28,32 +28,6 @@ public class Problem0713_SubarrayProductLessThanK {
 		return cnt;
 	}
 
-	public int numSubarrayProductLessThanK2(int[] nums, int k) {
-		int cnt = 0;
-
-		for (int start = 0; start < nums.length; start++) {
-			int end = endIndexOfMaxSubarrayProductLessThanKStartFrom(nums, start, k);
-			if (end >= start) {
-				cnt += end - start + 1;
-			}
-		}
-
-		return cnt;
-	}
-
-	private int endIndexOfMaxSubarrayProductLessThanKStartFrom(int[] nums, int start, int k) {
-		int product = 1;
-		int i = start;
-		for (; i < nums.length; i++) {
-			product *= nums[i];
-			if (product >= k) {
-				break;
-			}
-		}
-
-		return i - 1;
-	}
-
 	public static void main(String[] args) {
 		Problem0713_SubarrayProductLessThanK obj = new Problem0713_SubarrayProductLessThanK();
 		System.out.println(obj.numSubarrayProductLessThanK(new int[] {10, 5, 2, 6}, 100));
