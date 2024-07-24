@@ -23,60 +23,47 @@ public class Problem0767_ReorganizeString {
 			return "";
 		}
 
-		char[] reorganized = new char[origin.length];
+		StringBuilder builder = new StringBuilder();
 
-		return backtrack(reorganized, count);
-	}
+		int maxCountIdx, secondMaxCountIdx;
+		while (true) {
+			int[] top2CountCharsIdx = getTop2CountCharsIdx(count);
 
-	private String backtrack(char[] reorganized, int[] count) {
-		int idx = getNonZeroMaxCount(count);
-		if (idx == -1) {
-			return String.valueOf(reorganized);
+			maxCountIdx = top2CountCharsIdx[0];
+			secondMaxCountIdx = top2CountCharsIdx[1];
+			if (maxCountIdx == -1 && secondMaxCountIdx == -1) {
+				break;
+			}
+
+			if (maxCountIdx != -1) {
+				builder.append((char)('a' + maxCountIdx));
+				count[maxCountIdx]--;
+			}
+			if (secondMaxCountIdx != -1) {
+				builder.append((char)('a' + secondMaxCountIdx));
+				count[secondMaxCountIdx]--;
+			}
 		}
 
-		char ch = (char) ('a' + idx);
-
-		for (int i = 0; i < reorganized.length; i++) {
-			if (reorganized[i] != 0) {
-				continue;
-			}
-
-			if (i > 0
-				&& reorganized[i-1] == ch) {
-				continue;
-			}
-
-			if (i < reorganized.length-1
-				&& reorganized[i+1] == ch) {
-				continue;
-			}
-
-			reorganized[i] = ch;
-			count[idx]--;
-
-			String s = backtrack(reorganized, count);
-			if (!s.isEmpty()) {
-				return s;
-			}
-
-			count[idx]++;
-			reorganized[i] = 0;
-		}
-
-		return "";
+		return builder.toString();
 	}
 
-	private int getNonZeroMaxCount(int[] count) {
-		int idx = -1;
-		int max = 0;
+	private int[] getTop2CountCharsIdx(int[] count) {
+		int maxCount = 0, maxCountIdx = -1, secondMaxCount = 0, secondMaxCountIdx = -1;
 		for (int i = 0; i < count.length; i++) {
-			if (count[i] > max) {
-				max = count[i];
-				idx = i;
+			if (count[i] > maxCount) {
+				secondMaxCount = maxCount;
+				secondMaxCountIdx = maxCountIdx;
+
+				maxCount = count[i];
+				maxCountIdx = i;
+			} else if (count[i] > secondMaxCount) {
+				secondMaxCount = count[i];
+				secondMaxCountIdx = i;
 			}
 		}
 
-		return idx;
+		return new int[] {maxCountIdx, secondMaxCountIdx};
 	}
 
 	public static void main(String[] args) {
