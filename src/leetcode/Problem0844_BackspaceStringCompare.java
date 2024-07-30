@@ -5,32 +5,44 @@ package leetcode;
  */
 public class Problem0844_BackspaceStringCompare {
 	public boolean backspaceCompare(String s, String t) {
-		String backspaced1 = backspace(s);
-		String backspaced2 = backspace(t);
+		char[] schars = s.toCharArray();
+		char[] tchars = t.toCharArray();
 
-		if (backspaced1.equals(backspaced2)) {
-			return true;
-		} else {
-			return false;
+		int i = schars.length, j = tchars.length;
+		while (true) {
+			i = idxOfNextRightMostChar(schars, i);
+			j = idxOfNextRightMostChar(tchars, j);
+			if (i == -1 && j == -1) {
+				return true;
+			} else if (i != -1 && j != -1) {
+				char ch1 = schars[i];
+				char ch2 = tchars[j];
+				if (ch1 != ch2) {
+					return false;
+				}
+			} else {
+				return false;
+			}
 		}
 	}
 
-	private String backspace(String s) {
-		char[] chars = s.toCharArray();
+	private int idxOfNextRightMostChar(char[] chars, int idx) {
+		int skip = 0;
 
-		StringBuilder builder = new StringBuilder();
-
-		for (int i = 0; i < chars.length; i++) {
-			if (Character.isLowerCase(chars[i])) {
-				builder.append(chars[i]);
+		for (int i = --idx; i >= 0; i--) {
+			char ch = chars[i];
+			if (ch == '#') {
+				skip++;
 			} else {
-				if (builder.length() > 0) {
-					builder.deleteCharAt(builder.length() - 1);
+				if (skip > 0) {
+					skip--;
+				} else {
+					return i;
 				}
 			}
 		}
 
-		return builder.toString();
+		return -1;
 	}
 
 	public static void main(String[] args) {
