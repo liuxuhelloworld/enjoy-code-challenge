@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -10,32 +12,37 @@ public class Problem0846_HandOfStraights {
 			return false;
 		}
 
-		Map<Integer, Integer> cnt = new TreeMap<>();
-		for (int i = 0; i < len; i++) {
-			cnt.put(hand[i], cnt.getOrDefault(hand[i], 0) + 1);
+		Arrays.sort(hand);
+
+		Map<Integer, Integer> cnt = new HashMap<>();
+		for (int val : hand) {
+			cnt.put(val, cnt.getOrDefault(val, 0) + 1);
 		}
 
-		for (Map.Entry<Integer, Integer> entry : cnt.entrySet()) {
-			int key = entry.getKey();
-			int val = entry.getValue();
-
-			if (val == 0) {
+		for (int val : hand) {
+			boolean contains = cnt.containsKey(val);
+			if (!contains) {
 				continue;
 			}
 
-			cnt.put(key, 0);
-			for (int j = 1; j < groupSize; j++) {
-				if (!cnt.containsKey(key + j)
-					|| cnt.get(key + j) < val) {
+			for (int i = 0; i < groupSize; i++) {
+				int neededVal = val + i;
+				contains = cnt.containsKey(neededVal);
+				if (!contains) {
 					return false;
 				} else {
-					cnt.put(key + j, cnt.get(key + j) - val);
+					int valCnt = cnt.get(neededVal);
+					--valCnt;
+					if (valCnt > 0) {
+						cnt.put(neededVal, valCnt);
+					} else {
+						cnt.remove(neededVal);
+					}
 				}
 			}
 		}
 
-		return cnt.values().stream()
-			.allMatch(e -> e == 0);
+		return true;
 	}
 
 	public static void main(String[] args) {
