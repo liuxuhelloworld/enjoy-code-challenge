@@ -29,93 +29,32 @@ public class Problem1026_MaximumDifferenceBetweenNodeAndAncestor {
 		List<TreeNode> path = new ArrayList<>();
 		path.add(root);
 
-		TreeNode maxDiffNodeMax = new TreeNode(0);
-		TreeNode maxDiffNodeMin = new TreeNode(0);
-
-		dfs(root, path, maxDiffNodeMax, maxDiffNodeMin);
-
-		return Math.abs(maxDiffNodeMax.val - maxDiffNodeMin.val);
+		return dfs(root, path, 0);
 	}
 
-	private void dfs(TreeNode cur, List<TreeNode> path, TreeNode maxDiffNodeMax, TreeNode maxDiffNodeMin) {
+	private int dfs(TreeNode cur, List<TreeNode> path, int maxDiff) {
 		if (cur.left == null
 			&& cur.right == null) {
-			TreeNode maxNode = path.get(0);
-			TreeNode minNode = path.get(0);
-			for (TreeNode node : path) {
-				if (node.val > maxNode.val) {
-					maxNode = node;
-				}
-				if (node.val < minNode.val) {
-					minNode = node;
-				}
-			}
-
-			if (Math.abs(maxNode.val - minNode.val) > Math.abs(maxDiffNodeMax.val - maxDiffNodeMin.val)) {
-				maxDiffNodeMax.val = maxNode.val;
-				maxDiffNodeMin.val = minNode.val;
-			}
-
-			return;
+			int pathMaxDiff = pathMaxDiff(path);
+            return Math.max(pathMaxDiff, maxDiff);
 		}
 
 		if (cur.left != null) {
 			path.add(cur.left);
-			dfs(cur.left, path, maxDiffNodeMax, maxDiffNodeMin);
+			maxDiff = dfs(cur.left, path, maxDiff);
 			path.remove(path.size() - 1);
 		}
 		if (cur.right != null) {
 			path.add(cur.right);
-			dfs(cur.right, path, maxDiffNodeMax, maxDiffNodeMin);
+			maxDiff = dfs(cur.right, path, maxDiff);
 			path.remove(path.size() - 1);
-		}
-	}
-
-	public int maxAncestorDiff2(TreeNode root) {
-		Set<TreeNode> done = new HashSet<>();
-
-		Stack<TreeNode> path = new Stack<>();
-		path.add(root);
-
-		int maxDiff = 0;
-		while (!path.isEmpty()) {
-			TreeNode cur = path.peek();
-			if (cur.left == null
-				&& cur.right == null) {
-
-				int pathMaxDiff = maxDiff(path);
-				if (pathMaxDiff > maxDiff) {
-					maxDiff = pathMaxDiff;
-				}
-
-				done.add(cur);
-				path.pop();
-
-				continue;
-			}
-
-			if (cur.left != null
-				&& !done.contains(cur.left)) {
-				path.push(cur.left);
-				continue;
-			}
-
-			if (cur.right != null
-				&& !done.contains(cur.right)) {
-				path.push(cur.right);
-				continue;
-			}
-
-			done.add(cur);
-			path.pop();
 		}
 
 		return maxDiff;
 	}
 
-	private int maxDiff(Stack<TreeNode> path) {
+	private int pathMaxDiff(List<TreeNode> path) {
 		int max = path.get(0).val, min = path.get(0).val;
-
 		for (TreeNode node : path) {
 			if (node.val > max) {
 				max = node.val;
@@ -128,15 +67,48 @@ public class Problem1026_MaximumDifferenceBetweenNodeAndAncestor {
 		return max - min;
 	}
 
+	public int maxAncestorDiff2(TreeNode root) {
+		return dfs(root, root.val, root.val, 0);
+	}
+
+	private int dfs(TreeNode cur, int max, int min, int maxDiff) {
+		if (cur == null) {
+			return maxDiff;
+		}
+
+		max = Math.max(cur.val, max);
+		min = Math.min(cur.val, min);
+		maxDiff = Math.max(maxDiff, max - min);
+
+		if (cur.left == null
+			&& cur.right == null) {
+			return maxDiff;
+		}
+
+		if (cur.left != null) {
+			maxDiff = dfs(cur.left, max, min, maxDiff);
+		}
+		if (cur.right != null) {
+			maxDiff = dfs(cur.right, max, min, maxDiff);
+		}
+
+		return maxDiff;
+	}
+
 	public static void main(String[] args) {
 		Problem1026_MaximumDifferenceBetweenNodeAndAncestor obj =
 			new Problem1026_MaximumDifferenceBetweenNodeAndAncestor();
 
-		TreeNode root = new TreeNode(1);
-		root.right = new TreeNode(2);
-		root.right.right = new TreeNode(0);
-		root.right.right.left = new TreeNode(3);
+		TreeNode root = new TreeNode(8);
+		root.left = new TreeNode(3);
+		root.right = new TreeNode(10);
+		root.left.left = new TreeNode(1);
+		root.left.right = new TreeNode(6);
+		root.right.right = new TreeNode(14);
+		root.left.right.left = new TreeNode(4);
+		root.left.right.right = new TreeNode(7);
+		root.right.right.left = new TreeNode(13);
 
-		System.out.println(obj.maxAncestorDiff2(root));
+		System.out.println(obj.maxAncestorDiff(root));
 	}
 }
