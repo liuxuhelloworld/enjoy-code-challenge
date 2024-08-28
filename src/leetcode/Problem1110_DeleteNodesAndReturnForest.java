@@ -28,38 +28,6 @@ public class Problem1110_DeleteNodesAndReturnForest {
 	}
 
 	public List<TreeNode> delNodes(TreeNode root, int[] to_delete) {
-		List<Integer> toDelete = new ArrayList<>();
-		Arrays.stream(to_delete).forEach(toDelete::add);
-
-		List<TreeNode> forest = new ArrayList<>();
-
-		dfs(root, true, toDelete, forest);
-
-		return forest;
-	}
-
-	private TreeNode dfs(TreeNode node, boolean isRoot, List<Integer> toDelete, List<TreeNode> forest) {
-		if (node == null) {
-			return null;
-		}
-
-		boolean deleted = toDelete.contains(node.val);
-
-		node.left = dfs(node.left, deleted, toDelete, forest);
-		node.right = dfs(node.right, deleted, toDelete, forest);
-
-		if (deleted) {
-			return null;
-		}
-
-		if (isRoot) {
-			forest.add(node);
-		}
-
-		return node;
-	}
-
-	public List<TreeNode> delNodes2(TreeNode root, int[] to_delete) {
 		TreeNode[] parents = new TreeNode[1001]; // parent[i] represents the value i node's parent
 		TreeNode[] self = new TreeNode[1001]; // self[i] represents the value i node self
 
