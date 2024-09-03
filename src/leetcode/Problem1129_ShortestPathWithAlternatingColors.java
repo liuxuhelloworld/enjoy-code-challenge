@@ -26,50 +26,43 @@ public class Problem1129_ShortestPathWithAlternatingColors {
 		queue.offer(0);
 
 		while (!queue.isEmpty()) {
-			Set<Integer> nextRound = new HashSet<>();
+			int v = queue.poll();
 
-			int size = queue.size();
-			while (size-- > 0) {
-				int v = queue.poll();
+			if (shortestPathLengthWithBlueLastPath[v] != -1) {
+				int length = shortestPathLengthWithBlueLastPath[v] + 1;
+                for (int[] redEdge : redEdges) {
+                    if (redEdge[0] == v) {
+                        int next = redEdge[1];
 
-				if (shortestPathLengthWithBlueLastPath[v] != -1) {
-					int length = shortestPathLengthWithBlueLastPath[v] + 1;
-					for (int i = 0; i < redEdges.length; i++) {
-						if (redEdges[i][0] == v) {
-							int next = redEdges[i][1];
-
-							if (shortestPathLengthWithRedLastPath[next] == -1) {
-								shortestPathLengthWithRedLastPath[next] = length;
-								nextRound.add(next);
-							} else {
-								if (length < shortestPathLengthWithRedLastPath[next]) {
-									shortestPathLengthWithRedLastPath[next] = length;
-								}
-							}
-						}
-					}
-				}
-
-				if (shortestPathLengthWithRedLastPath[v] != -1) {
-					int length = shortestPathLengthWithRedLastPath[v] + 1;
-					for (int i = 0; i < blueEdges.length; i++) {
-						if (blueEdges[i][0] == v) {
-							int next = blueEdges[i][1];
-
-							if (shortestPathLengthWithBlueLastPath[next] == -1) {
-								shortestPathLengthWithBlueLastPath[next] = length;
-								nextRound.add(next);
-							} else {
-								if (length < shortestPathLengthWithBlueLastPath[next]) {
-									shortestPathLengthWithBlueLastPath[next] = length;
-								}
-							}
-						}
-					}
-				}
+                        if (shortestPathLengthWithRedLastPath[next] == -1) {
+                            shortestPathLengthWithRedLastPath[next] = length;
+                            queue.add(next);
+                        } else {
+                            if (length < shortestPathLengthWithRedLastPath[next]) {
+                                shortestPathLengthWithRedLastPath[next] = length;
+                            }
+                        }
+                    }
+                }
 			}
 
-			queue.addAll(nextRound);
+			if (shortestPathLengthWithRedLastPath[v] != -1) {
+				int length = shortestPathLengthWithRedLastPath[v] + 1;
+                for (int[] blueEdge : blueEdges) {
+                    if (blueEdge[0] == v) {
+                        int next = blueEdge[1];
+
+                        if (shortestPathLengthWithBlueLastPath[next] == -1) {
+                            shortestPathLengthWithBlueLastPath[next] = length;
+                            queue.add(next);
+                        } else {
+                            if (length < shortestPathLengthWithBlueLastPath[next]) {
+                                shortestPathLengthWithBlueLastPath[next] = length;
+                            }
+                        }
+                    }
+                }
+			}
 		}
 
 		int[] shortestPathLength = new int[n];
