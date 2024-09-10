@@ -37,20 +37,11 @@ public class Problem1604_AlertUsingSameKeyCardThreeOrMoreTimesInOneHourPeriod {
 
 	private boolean existsThreeOrMoreTimesInOneHourPeriod(List<String> timeList) {
 		String[] timeArray = timeList.toArray(new String[] {});
-		int windowCnt = 0;
-		int start = 0, end = 0;
-		while (end < timeArray.length) {
-			String startTime = timeArray[start];
-			String endTime = timeArray[end];
-			if (isOneHourPeriod(startTime, endTime)) {
-				windowCnt++;
-				if (windowCnt >= 3) {
-					return true;
-				}
-				end++;
-			} else {
-				windowCnt--;
-				start++;
+		for (int i = 2; i < timeArray.length; i++) {
+			String cur = timeArray[i];
+			String twoPositionsBefore = timeArray[i - 2];
+			if (isOneHourPeriod(twoPositionsBefore, cur)) {
+				return true;
 			}
 		}
 
@@ -58,10 +49,10 @@ public class Problem1604_AlertUsingSameKeyCardThreeOrMoreTimesInOneHourPeriod {
 	}
 
 	private boolean isOneHourPeriod(String time1, String time2) {
-		int hour1 = Integer.valueOf(time1.substring(0, 2));
-		int minute1 = Integer.valueOf(time1.substring(3, 5));
-		int hour2 = Integer.valueOf(time2.substring(0, 2));
-		int minute2 = Integer.valueOf(time2.substring(3, 5));
+		int hour1 = Integer.parseInt(time1.substring(0, 2));
+		int minute1 = Integer.parseInt(time1.substring(3, 5));
+		int hour2 = Integer.parseInt(time2.substring(0, 2));
+		int minute2 = Integer.parseInt(time2.substring(3, 5));
 
 		int hourDiff = Math.abs(hour1 - hour2);
 		if (hourDiff == 0) {
