@@ -170,16 +170,16 @@ public class Problem0095_UniqueBinarySearchTrees {
 
 	public static void main(String[] args) {
 		Problem0095_UniqueBinarySearchTrees obj = new Problem0095_UniqueBinarySearchTrees();
-		List<TreeNode> binarySearchTrees = obj.generateTrees(1);
+		List<TreeNode> binarySearchTrees = obj.generateTrees1(1);
 		System.out.println(binarySearchTrees);
 
-		binarySearchTrees = obj.generateTrees(2);
+		binarySearchTrees = obj.generateTrees1(2);
 		System.out.println(binarySearchTrees);
 
-		binarySearchTrees = obj.generateTrees(3);
+		binarySearchTrees = obj.generateTrees1(3);
 		System.out.println(binarySearchTrees);
 
-		binarySearchTrees = obj.generateTrees(4);
+		binarySearchTrees = obj.generateTrees1(4);
 		System.out.println(binarySearchTrees);
 	}
 }

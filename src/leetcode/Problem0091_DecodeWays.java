@@ -10,7 +10,6 @@ public class Problem0091_DecodeWays {
 		int len = s.length();
 
 		int[] dp = new int[len + 1];
-		dp[0] = 1;
 
 		if (isValid(s.substring(0, 1))) {
 			dp[1] = 1;

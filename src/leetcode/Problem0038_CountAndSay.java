@@ -3,7 +3,7 @@ package leetcode;
 /**
  * https://leetcode.cn/problems/count-and-say/
  */
-public class Problem38_CountAndSay {
+public class Problem0038_CountAndSay {
 	public String countAndSay(int n) {
 		String s = "1";
 		for (int i = 2; i <= n; i++) {
@@ -39,7 +39,7 @@ public class Problem38_CountAndSay {
 	}
 
 	public static void main(String[] args) {
-		Problem38_CountAndSay obj =	new Problem38_CountAndSay();
+		Problem0038_CountAndSay obj =	new Problem0038_CountAndSay();
 		System.out.println(obj.countAndSay(1));
 		System.out.println(obj.countAndSay(4));
 	}

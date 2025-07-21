@@ -44,32 +44,6 @@ public class Problem0017_LetterCombinationsOfPhoneNumber {
 		}
 	}
 
-	public List<String> letterCombinations2(String digits) {
-		return letterCombinationRecur(digits, 0, digits.length()-1);
-	}
-
-	private List<String> letterCombinationRecur(String digits, int start, int end) {
-		if (start > end) {
-			return Collections.emptyList();
-		}
-
-		char digit = digits.charAt(start);
-		String chars = PHONE_NUMBER_TO_CHARACTERS.get(digit);
-		List<String> tails = letterCombinationRecur(digits, start + 1, end);
-		List<String> combinations = new ArrayList<>();
-		for (char ch : chars.toCharArray()) {
-			if (tails.size() > 0) {
-				for (String tail : tails) {
-					combinations.add(ch + tail);
-				}
-			} else {
-				combinations.add(ch + "");
-			}
-		}
-
-		return combinations;
-	}
-
 	public static void main(String[] args) {
 		Problem0017_LetterCombinationsOfPhoneNumber obj = new Problem0017_LetterCombinationsOfPhoneNumber();
 		System.out.println(obj.letterCombinations(""));
